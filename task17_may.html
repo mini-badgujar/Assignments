@@ -60,15 +60,15 @@
         <h1>Displaying Data into Table</h1>
     </center>
     <div class="container tbox">
-        <button id="add_info" class="btn btn-light mr-3 mb-3" onclick="add()">ADD</button>
+        <button id="add_info" class="btn btn-light mr-3 mb-3">ADD</button>
         <table id="info_table" class="table table-bordered table-hover rounded">
-            <!-- <thead class="table-info">
+            <thead class="table-info">
                 <th id>id</th>
                 <th>Title</th>
                 <th>Userid</th>
                 <th>Action</th>
             </thead>
-            <tr>
+            <!-- <tr>
                 <td id="id"></td>
                 <td id="title"></td>
                 <td id="userId"><p id="demo"></p></td>
@@ -81,49 +81,36 @@
     </div>
 </body>
 <script>
-    let count = 0;
     let table = "<thead><th> ID </th><th> Title </th><th> UserId </th><th> Action </th></thead>";
-    //function that is called when add button is clicked
-    function add() {
+    //function which display the data
+    (function add() {
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function () {
-            
+
             const data = JSON.parse(this.responseText);
             const len = data.length;
             let id = 0;
             let title = 0;
             let userId = 0;
-            let action = document.getElementById("action");
-
-
-            //if data is left in json file it will be printed else alert will be given to user
-            if (count < len) {
-
-                    id = data[count].id
-                    title = data[count].title
-                    userId = data[count].userId
-                    table +=
-                        "<tr><td>" +
-                        id +
-                        "</td><td>" +
-                        title +
-                        "</td><td>" +
-                        userId +
-                        "</td><td><button class='btn btn-primary mr-3 mb-3'>Edit</button><br> <button class='btn btn-danger'>Delete</button>"
+            for (let i = 0; i < len; i++) {
+                id = data[i].id
+                title = data[i].title
+                userId = data[i].userId
+                table +=
+                    "<tr><td>" +
+                    id +
+                    "</td><td>" +
+                    title +
+                    "</td><td>" +
+                    userId +
+                    "</td><td><button class='btn btn-primary mr-3 mb-3'>Edit</button><br> <button class='btn btn-danger'>Delete</button>"
                     "</td></tr>";
-                    count++;
-    
             }
-            else{
-                alert("No more data can be added.")
-            }
-
-
             document.getElementById("info_table").innerHTML = table;
         }
         xhttp.open("GET", "https://jsonplaceholder.typicode.com/posts", true);
         xhttp.send();
-    }
+    })();
 </script>
 
 </html>
