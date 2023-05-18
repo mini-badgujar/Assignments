@@ -54,10 +54,7 @@
 </head>
 
 <body>
-    <!-- Create an HTML page that will have jquery included in it and bootstraps CSS and js files
-
-        Using bootstrap table and jquery ajax display a table having data from the following URL
-        https://jsonplaceholder.typicode.com/posts 
+    <!-- Create an HTML page that will have jquery included in it and bootstraps CSS and js files. Using bootstrap table and jquery ajax display a table having data from the following URL: https://jsonplaceholder.typicode.com/posts 
      -->
     <center>
         <h1>Displaying Data into Table</h1>
@@ -65,13 +62,13 @@
     <div class="container tbox">
         <button id="add_info" class="btn btn-light mr-3 mb-3" onclick="add()">ADD</button>
         <table id="info_table" class="table table-bordered table-hover rounded">
-            <thead class="table-info">
+            <!-- <thead class="table-info">
                 <th id>id</th>
                 <th>Title</th>
                 <th>Userid</th>
                 <th>Action</th>
             </thead>
-            <!-- <tr>
+            <tr>
                 <td id="id"></td>
                 <td id="title"></td>
                 <td id="userId"><p id="demo"></p></td>
@@ -81,7 +78,6 @@
                 </td>
             </tr> -->
         </table>
-        
     </div>
 </body>
 <script>
@@ -91,20 +87,21 @@
         xhttp.onload = function () {
         const data = JSON.parse(this.responseText);
         const len = data.length;
-        let count = 1;
-        let table = ""
+        var count = 4;
+        let table = "<thead><th> ID </th><th> Title </th><th> UserId </th><th> Action </th></thead>"
         let id = 0 ;
         let title = 0;
         let userId = 0;
-        let i= 0;
+        let action = document.getElementById("action");
         for(let i=0; i < count; i++){
             id = data[i].id  
             title = data[i].title  
             userId = data[i].userId
             table += "<tr><td>" +  id + "</td>" + "<td>" + title + "</td>" + "<td>" + userId + "</td></tr>";
+        
         }
         
-        document.getElementById("info_table").innerHTML += table;
+        document.getElementById("info_table").innerHTML = table;
     }
         xhttp.open("GET", "https://jsonplaceholder.typicode.com/posts", true);
         xhttp.send();
