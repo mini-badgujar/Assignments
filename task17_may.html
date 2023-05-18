@@ -81,28 +81,46 @@
     </div>
 </body>
 <script>
-
+    let count = 0;
+    let table = "<thead><th> ID </th><th> Title </th><th> UserId </th><th> Action </th></thead>";
+    //function that is called when add button is clicked
     function add() {
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function () {
-        const data = JSON.parse(this.responseText);
-        const len = data.length;
-        var count = 4;
-        let table = "<thead><th> ID </th><th> Title </th><th> UserId </th><th> Action </th></thead>"
-        let id = 0 ;
-        let title = 0;
-        let userId = 0;
-        let action = document.getElementById("action");
-        for(let i=0; i < count; i++){
-            id = data[i].id  
-            title = data[i].title  
-            userId = data[i].userId
-            table += "<tr><td>" +  id + "</td>" + "<td>" + title + "</td>" + "<td>" + userId + "</td></tr>";
-        
+            
+            const data = JSON.parse(this.responseText);
+            const len = data.length;
+            let id = 0;
+            let title = 0;
+            let userId = 0;
+            let action = document.getElementById("action");
+
+
+            //if data is left in json file it will be printed else alert will be given to user
+            if (count < len) {
+
+                    id = data[count].id
+                    title = data[count].title
+                    userId = data[count].userId
+                    table +=
+                        "<tr><td>" +
+                        id +
+                        "</td><td>" +
+                        title +
+                        "</td><td>" +
+                        userId +
+                        "</td><td><button class='btn btn-primary mr-3 mb-3'>Edit</button><br> <button class='btn btn-danger'>Delete</button>"
+                    "</td></tr>";
+                    count++;
+    
+            }
+            else{
+                alert("No more data can be added.")
+            }
+
+
+            document.getElementById("info_table").innerHTML = table;
         }
-        
-        document.getElementById("info_table").innerHTML = table;
-    }
         xhttp.open("GET", "https://jsonplaceholder.typicode.com/posts", true);
         xhttp.send();
     }
